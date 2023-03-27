@@ -1,15 +1,15 @@
-import { Empleado, EmpleadoForm, PaginationEmpleado } from "@/interfaces/empelado-interfaces";
-import { empleadosService } from "@/services";
-import { useEmpleadoStore } from "@/store";
+import { PaginateProveedor, Proveedor, ProveedorForm } from "@/interfaces/proveedor-interfaces";
+import { proveedorService } from "@/services";
+import { useProveedorStore } from "@/store/ProveedorStore";
 import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 import { shallow } from "zustand/shallow";
 
-export const useFetchEmpleados = () => {
+export const useFetchProveedores = () => {
 
   //* Zustand State
-  const { empleados, selectedEmpleado, setEmpleados, addEmpleado, removeEmpleadoData, setSelectedEmpleado, removeSelectedEmpleado, updateEmpleado } = useEmpleadoStore((state) => state, shallow);
+  const { proveedores, selectedProveedor, setProveedores, addProveedor, removeProveedorData, setSelectedProveedor, removeSelectedProveedor, updateProveedor } = useProveedorStore((state) => state, shallow);
 
   //* isDeleting state
   const [isDeleting, setIsDeleting] = useState(false)
@@ -20,14 +20,14 @@ export const useFetchEmpleados = () => {
    * Obtiene los empleados desde la API y los setea dentro del estado global de empleados  
    * @param numberPage number - número de la página a buscar
    */
-  const getEmpleados = async (numberPage?: number) => {
-    removeEmpleadoData()
+  const getProveedores = async (numberPage?: number) => {
+    removeProveedorData()
 
     //* Si no se pasa el número como argumento se usa el valor inicial del estado
-    await empleadosService.getAllEmpleados(numberPage ?? empleados.pageNumber)
+    await proveedorService.getAllProveedores(numberPage ?? proveedores.pageNumber)
       .then(res => {
-        setEmpleados(res)
-      }).catch((res: AxiosError<PaginationEmpleado>) => {
+        setProveedores(res)
+      }).catch((res: AxiosError<PaginateProveedor>) => {
         if (res.code === 'ERR_NETWORK')
           Swal.fire({
             icon: 'error',
@@ -43,12 +43,12 @@ export const useFetchEmpleados = () => {
    * @param empelado EmpleadoForm -> Información del empleado a registrar
    * @param handleCloseModal  handelCloseModal -> función que cierra el modal del formulario de registro 
    */
-  const _addEmpleado = async (empelado: EmpleadoForm) => {
-    await empleadosService.createEmpleado(empelado)
+  const _addProveedor = async (proveedor: ProveedorForm) => {
+    await proveedorService.createProveedor(proveedor)
       .then((res) => {
-        addEmpleado(res.data)
+        addProveedor(res.data)
       })
-      .catch((res: AxiosError<Empleado>) => {
+      .catch((res: AxiosError<Proveedor>) => {
         if (res.response?.status === 400) {
           throw new Error(res.response?.data.message?.toString().replace('.,', '<br>'));
         }
@@ -61,12 +61,12 @@ export const useFetchEmpleados = () => {
    * @param empleado EmpleadoForm -> Información del empleado a actualizar
    * @param id_empleado  string -> Id del empleado a actualizar
    */
-  const _updateEmpleado = async (empleado: EmpleadoForm, id_empleado: string) => {
-    await empleadosService.updateEmpleado(empleado, id_empleado)
+  const _updateProveedor = async (proveedor: ProveedorForm, id_proveedor: string) => {
+    await proveedorService.updateProveedor(proveedor, id_proveedor)
       .then(res => {
-        updateEmpleado(res.data)
+        updateProveedor(res.data)
       })
-      .catch((res: AxiosError<Empleado>) => {
+      .catch((res: AxiosError<Proveedor>) => {
         if (res.response?.status === 400) {
           throw new Error(res.response?.data.message?.toString().replace(',', '<br>'));
         }
@@ -78,7 +78,7 @@ export const useFetchEmpleados = () => {
    * estado global de empleados
    * @param id_empleado string -> Id del empleado a habilitar
    */
-  const enableEmpleado = async (id_empleado: string) => {
+  /* const enableEmpleado = async (id_empleado: string) => {
     Swal.fire({
       icon: 'warning',
       text: '¿Desea habilitar al empleado?',
@@ -88,7 +88,7 @@ export const useFetchEmpleados = () => {
       showConfirmButton: true
     }).then(async (res) => {
       if (res.isConfirmed) {
-        await empleadosService.enableEmpleado(id_empleado)
+        await empleadoService.enableEmpleado(id_empleado)
           .then(res => {
             updateEmpleado(res.data)
           })
@@ -102,14 +102,14 @@ export const useFetchEmpleados = () => {
           })
       }
     })
-  }
+  } */
 
   /**
     * Desabilita un empleado haciendo un petición post a la API, posteriormente actualiza los datos del empleado en el
     * estado global de empleados
     * @param id_empleado string -> Id del empleado a desabilitar
     */
-  const disableEmpleado = async (id_empleado: string) => {
+  /* const disableEmpleado = async (id_empleado: string) => {
     Swal.fire({
       icon: 'warning',
       text: '¿Desea desabilitar al empleado?',
@@ -119,7 +119,7 @@ export const useFetchEmpleados = () => {
       showConfirmButton: true
     }).then(async (res) => {
       if (res.isConfirmed) {
-        await empleadosService.disableEmpleado(id_empleado)
+        await empleadoService.disableEmpleado(id_empleado)
           .then(res => {
             updateEmpleado(res.data)
           })
@@ -133,7 +133,7 @@ export const useFetchEmpleados = () => {
           })
       }
     })
-  }
+  } */
 
   /**
    * Selecciona la información un empleado del estado global de empleados mediante su id. <br>
@@ -141,10 +141,10 @@ export const useFetchEmpleados = () => {
    ** Actualmente solo obtiene los datos del empleado mediante un filtrado realizado en el estado global de empleados. Sin embargo esto será cambiado cuando se necesite realizar una peticion post a la API para obtener mas datos que los mostrados en la tabla de empleados.
    * @param id_empleado string -> Id del empleado a obtener
    */
-  const selectEmpleadoById = (id_empleado: string) => {
-    const empleado = empleados?.data?.find((e) => e.id_empleado === id_empleado)
-    if (empleado !== undefined) {
-      setSelectedEmpleado(empleado)
+  const selectProveedorById = (id_proveedor: string) => {
+    const proveedor = proveedores?.data?.find((p) => p.id_proveedor === id_proveedor)
+    if (proveedor !== undefined) {
+      setSelectedProveedor(proveedor)
     } else {
       Swal.fire({
         icon: 'error',
@@ -156,11 +156,11 @@ export const useFetchEmpleados = () => {
   /**
    * Remueve la información del estado de selectedEmpleado poniendo su valor en null
    */
-  const _removeSelectedEmpleado = () => {
-    removeSelectedEmpleado()
+  const _removeSelectedProveedor = () => {
+    removeSelectedProveedor()
   }
 
-  const _removeEmpleado = async (id_empleado: string) => {
+  const _removeProveedor = async (id_proveedor: string) => {
     setIsDeleting(true)
 
     Swal.fire({
@@ -172,13 +172,13 @@ export const useFetchEmpleados = () => {
       showConfirmButton: true
     }).then(async (res) => {
       if (res.isConfirmed) {
-        await empleadosService.removeEmpleado(id_empleado)
+        await proveedorService.removeProveedor(id_proveedor)
           .then(() => {
-            removeEmpleadoData()
-            getEmpleados()
+            removeProveedorData()
+            getProveedores()
             setIsDeleting(false)
           })
-          .catch((err: AxiosError<Empleado>) => {
+          .catch((err: AxiosError<Proveedor>) => {
             Swal.fire({
               icon: 'error',
               text: err.response?.data.message?.toString()
@@ -190,16 +190,14 @@ export const useFetchEmpleados = () => {
   }
 
   return {
-    getEmpleados,
-    empleados,
-    selectedEmpleado,
+    proveedores,
     isDeleting,
-    addEmpleado: _addEmpleado,
-    updateEmpleado: _updateEmpleado,
-    removeEmpleado: _removeEmpleado,
-    selectEmpleadoById,
-    removeSelectedEmpleado: _removeSelectedEmpleado,
-    enableEmpleado,
-    disableEmpleado
+    selectedProveedor,
+    getProveedores,
+    addProveedor: _addProveedor,
+    updateProveedor: _updateProveedor,
+    selectProveedorById,
+    removeSelectedProveedor: _removeSelectedProveedor,
+    removeProveedor: _removeProveedor
   }
 }

@@ -27,7 +27,7 @@ export const AdminLayout: FC<Props> = ({ children }) => {
           <AdminNavbar />
           <main className="flex w-full">
             <div className="bg-gray-100 w-full p-3 flex justify-center">
-              <div className='shadow-xl rounded-md w-full max-w-[1280px] overflow-hidden'>
+              <div className='shadow-xl rounded-md w-full max-w-[1280px] overflow-hidden h-[806px] my-auto'>
                 {
                   children
                 }

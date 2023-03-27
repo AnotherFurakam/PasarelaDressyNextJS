@@ -1,14 +1,10 @@
-import { Empleado, EmpleadoForm } from '@/interfaces/empelado-interfaces'
+import { EmpleadoForm } from '@/interfaces/empelado-interfaces'
 import { empleadoFormSchema } from '@/validators/empleado.validators'
 import { Formik, Form } from 'formik'
 import FormInput from '../FormComponents/FromInput'
 import SendButton from '../FormComponents/SendButton'
-import { empleadoService } from '@/services'
-import Swal from "sweetalert2";
-import { AxiosError } from 'axios'
-import { useEmpleadoStore } from '@/store'
-import { shallow } from 'zustand/shallow'
 import { useFetchEmpleados } from '@/hooks/useFetchEmpleados'
+import Swal from 'sweetalert2'
 
 interface Props {
   handleCloseModal: () => void
@@ -35,18 +31,40 @@ const EmpleadoForm: React.FC<Props> = ({ handleCloseModal }) => {
       onSubmit={
         async (values, helpers) => {
 
+
           if (!selectedEmpleado) {
             //*Registrando Empleado
-            addEmpleado(values, handleCloseModal)
+            await addEmpleado(values)
               .then(() => {
+                Swal.fire({
+                  icon: 'success',
+                  text: 'Empleado registrado correctamente'
+                })
                 helpers.setSubmitting(false)
+                handleCloseModal()
+              }).catch((err: Error) => {
+                Swal.fire({
+                  icon: 'error',
+                  html: err.message,
+                })
               })
 
           } else {
             //* Actualizando empleado
-            updateEmpleado(values, selectedEmpleado.id_empleado, handleCloseModal)
+            await updateEmpleado(values, selectedEmpleado.id_empleado)
               .then(() => {
+                Swal.fire({
+                  icon: 'success',
+                  text: 'Empleado registrado correctamente'
+                })
                 helpers.setSubmitting(false)
+                handleCloseModal()
+              })
+              .catch((err: Error) => {
+                Swal.fire({
+                  icon: 'error',
+                  html: err.message,
+                })
               })
           }
         }
@@ -72,7 +90,7 @@ const EmpleadoForm: React.FC<Props> = ({ handleCloseModal }) => {
                 <FormInput label={'Dirección'} type={'text'} component='textarea' rows="3" name='direccion' autoComplete={"off"} />
               </div>
               <div>
-                <SendButton disabled={isSubmitting} />
+                <SendButton isSendButton={!selectedEmpleado ? true: false} disabled={isSubmitting} />
               </div>
             </div>
           </Form>

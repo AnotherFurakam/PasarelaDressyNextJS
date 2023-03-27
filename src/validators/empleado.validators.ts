@@ -1,4 +1,3 @@
-import { EmpleadoForm } from '@/interfaces/empelado-interfaces'
 import * as Yup from 'yup'
 
 export const empleadoFormSchema = Yup.object().shape({

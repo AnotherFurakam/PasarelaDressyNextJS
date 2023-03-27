@@ -6,6 +6,7 @@ export interface EmpleadoStore {
   empleados: PaginationEmpleado
   selectedEmpleado: Empleado | null
   setEmpleados: (empleados: PaginationEmpleado) => void
+  addEmpleado: (empleado: Empleado) => void
   removeEmpleadoData: () => void
   updateEmpleado: (empleado: Empleado) => void
   setSelectedEmpleado: (empleado: Empleado) => void
@@ -30,6 +31,20 @@ export const useEmpleadoStore = create<EmpleadoStore>()(
           empleados
         }))
       },
+      addEmpleado: (empleado: Empleado) =>
+        set((state) => {
+          if (state.empleados.data !== null) {
+            return {
+              ...state,
+              empleados: {
+                ...state.empleados,
+                data:  state.empleados.data.length < 13 ? [...state.empleados.data, empleado] : state.empleados.data,
+              }
+            }
+          } else {
+            return state
+          }
+        }),
       removeEmpleadoData: () => {
         set((state) => ({
           ...state,

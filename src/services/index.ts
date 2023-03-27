@@ -1,2 +1,3 @@
-export { default as empleadoService } from './empleados.service';
-export { default as rolService } from './rol.service.api';
+export { default as empleadosService } from './empleados.service';
+export { default as proveedorService } from './proveedor.service';
+export { default as rolServiceApi } from './rol.service.api';
