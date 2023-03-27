@@ -19,10 +19,11 @@ const SideLink: FC<Props> = ({ text, children, customHref }) => {
         mx-auto py-2 px-4 w-full 
         rounded-md 
         hover:bg-slate-700 
+        border-2 hover:border-slate-700
         flex align-middle gap-4 
         cursor-pointer 
         active:bg-slate-600 
-        ${pathname === customHref ? "bg-slate-700" : "bg-slate-600"}
+        ${pathname === customHref ? "bg-slate-700 border-slate-200 hover:border-slate-200" : "bg-slate-600 border-slate-600"}
       `}
     >
       {
