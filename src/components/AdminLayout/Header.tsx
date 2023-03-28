@@ -7,9 +7,10 @@ interface HeaderProps {
   headerText: string
   handleOpenModal?: () => void
   twColor: string
+  children?: ReactNode
 }
 
-const Header: FC<HeaderProps> = ({ icon, buttonText, headerText, handleOpenModal, twColor }) => {
+const Header: FC<HeaderProps> = ({ icon, buttonText, headerText, handleOpenModal, twColor, children }) => {
   return (
     <div className='h-auto flex flex-col'>
       <div className={`${twColor} p-4 flex justify-between`}>
@@ -19,7 +20,7 @@ const Header: FC<HeaderProps> = ({ icon, buttonText, headerText, handleOpenModal
         </div>
         <div>
           {
-            buttonText &&
+            buttonText ?
             <button type='button' className={`bg-gray-800 text-white p-3 lg:p-2 rounded-md my-auto flex gap-2 hover:bg-gray-900 active:bg-gray-800 active:scale-[0.99]`} onClick={handleOpenModal}>
               <BsPlusCircleFill className='my-auto' />
               <p className='hidden lg:block'>
@@ -28,6 +29,7 @@ const Header: FC<HeaderProps> = ({ icon, buttonText, headerText, handleOpenModal
                 }
               </p>
             </button>
+            : children
           }
         </div>
       </div>

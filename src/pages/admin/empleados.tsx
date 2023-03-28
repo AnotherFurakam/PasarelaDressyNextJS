@@ -1,8 +1,6 @@
 import EmpleadoTable from '@/components/Empleados/EmpleadoTable';
 import { AdminLayout } from '@/layouts/AdminLayout'
 import { FC, useState } from 'react'
-import { BsFillPeopleFill } from 'react-icons/bs';
-import { BsPlusCircleFill } from 'react-icons/bs';
 import dynamic from 'next/dynamic';
 import { useFetchEmpleados } from '@/hooks/useFetchEmpleados';
 import { Pagination } from '@/components/Pagination';

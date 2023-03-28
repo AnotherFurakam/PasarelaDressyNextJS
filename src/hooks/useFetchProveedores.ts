@@ -17,7 +17,7 @@ export const useFetchProveedores = () => {
   //* customHook functions
 
   /**
-   * Obtiene los empleados desde la API y los setea dentro del estado global de empleados  
+   * Obtiene los proveedores desde la API y los setea dentro del estado global de proveedor  
    * @param numberPage number - número de la página a buscar
    */
   const getProveedores = async (numberPage?: number) => {
@@ -186,6 +186,7 @@ export const useFetchProveedores = () => {
             setIsDeleting(false)
           })
       }
+      setIsDeleting(false)
     })
   }
 

@@ -2,7 +2,7 @@ import { Empleado, EmpleadoForm, PaginationEmpleado } from "@/interfaces/empelad
 import { empleadosService } from "@/services";
 import { useEmpleadoStore } from "@/store";
 import { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 import { shallow } from "zustand/shallow";
 
