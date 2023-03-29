@@ -35,6 +35,15 @@ export interface PaginationEmpleado {
   nextPage:   number | null;
 }
 
+export interface PaginationShortEmpleado {
+  data:       ShortEmpleado[] | null;
+  pageNumber: number;
+  pageSize:   number;
+  totalPages: number | null;
+  prevPage:   number | null;
+  nextPage:   number | null;
+}
+
 
 
 

@@ -16,10 +16,16 @@ export interface Asignacion {
   creado_el:     string;
   empleado:      ShortEmpleado;
   rol:           Rol;
+  message?: string
 }
 
 export interface ShortAsignacion {
   id_asignacion: string
   rol: Rol
+}
+
+export interface AsignacionForm {
+  id_rol: string
+  id_empleado: string
 }
 

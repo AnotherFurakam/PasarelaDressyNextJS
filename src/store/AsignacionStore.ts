@@ -1,19 +1,23 @@
 import { Asignacion, PaginationAsignacion } from "@/interfaces/asignacion-interface"
+import { PaginationShortEmpleado } from "@/interfaces/empelado-interfaces"
 import { create } from "zustand"
 import { devtools } from "zustand/middleware"
 
-export interface ProveedorStore {
+export interface AsignacionStore {
   asignaciones: PaginationAsignacion
-  selectedProveedor: Asignacion | null
-  setProveedores: (asignaciones: PaginationAsignacion) => void
-  addProveedor: (asignacion: Asignacion) => void
-  removeProveedorData: () => void
-  updateProveedor: (asignacion: Asignacion) => void
-  setSelectedProveedor: (asignacion: Asignacion) => void
-  removeSelectedProveedor: () => void
+  selectedAsignacion: Asignacion | null
+  unasignedEmpleados: PaginationShortEmpleado
+  setAsignaciones: (asignaciones: PaginationAsignacion) => void
+  setUnasignedEmpleados: (empleados: PaginationShortEmpleado) => void
+  addAsignacion: (asignacion: Asignacion) => void
+  removeAsignacionData: () => void
+  removeUnasignedEmpleadosData: () => void
+  updateAsignacion: (asignacion: Asignacion) => void
+  setSelectedAsignacion: (asignacion: Asignacion) => void
+  removeSelectedAsignacion: () => void
 }
 
-export const useProveedorStore = create<ProveedorStore>()(
+export const useAsignacionStore = create<AsignacionStore>()(
   devtools(
     (set) => ({
       asignaciones: {
@@ -24,28 +28,52 @@ export const useProveedorStore = create<ProveedorStore>()(
         prevPage: null,
         totalPages: 1
       },
-      selectedProveedor: null,
-      setProveedores: (asignaciones: PaginationAsignacion) => {
+      unasignedEmpleados: {
+        data: null,
+        nextPage: null,
+        pageNumber: 1,
+        pageSize: 1,
+        prevPage: null,
+        totalPages: 1
+      },
+      selectedAsignacion: null,
+      setAsignaciones: (asignaciones: PaginationAsignacion) => {
         set((state) => ({
           ...state,
           asignaciones
         }))
       },
-      addProveedor: (asignacion: Asignacion) =>
+      setUnasignedEmpleados: (empleados: PaginationShortEmpleado) => {
+        set((state) => ({
+          ...state,
+          unasignedEmpleados: empleados
+        }))
+      },
+      addAsignacion: (asignacion: Asignacion) =>
         set((state) => {
           if (state.asignaciones.data !== null) {
             return {
               ...state,
               asignaciones: {
                 ...state.asignaciones,
-                data:  state.asignaciones.data.length < 13 ? [...state.asignaciones.data, asignacion] : state.asignaciones.data,
+                data: state.asignaciones.data.length < 14 ? [...state.asignaciones.data, asignacion] : state.asignaciones.data,
               }
             }
           } else {
             return state
           }
         }),
-      removeProveedorData: () => {
+      removeUnasignedEmpleadosData: () => {
+        set((state) => ({
+          ...state,
+          unasignedEmpleados: {
+            ...state.unasignedEmpleados,
+            data: null,
+            pageNumber: 1
+          }
+        }))
+      },
+      removeAsignacionData: () => {
         set((state) => ({
           ...state,
           asignaciones: {
@@ -54,19 +82,19 @@ export const useProveedorStore = create<ProveedorStore>()(
           }
         }))
       },
-      setSelectedProveedor: (asignacion: Asignacion) => {
+      setSelectedAsignacion: (asignacion: Asignacion) => {
         set((state) => ({
           ...state,
-          selectedProveedor: asignacion
+          selectedAsignacion: asignacion
         }))
       },
-      removeSelectedProveedor: () => {
+      removeSelectedAsignacion: () => {
         set((state) => ({
           ...state,
-          selectedProveedor: null
+          selectedAsignacion: null
         }))
       },
-      updateProveedor: (asignacion: Asignacion) =>
+      updateAsignacion: (asignacion: Asignacion) =>
         set((state) => (
           {
             ...state,

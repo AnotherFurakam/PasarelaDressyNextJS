@@ -39,10 +39,10 @@ const ProveedoresTable: FC<ProveedoresTableProps> = ({ setOpenModal }) => {
                   proveedores.data.map((p: Proveedor) => (
                     <tr className='text-center' key={p.id_proveedor}>
                       <TdId textColor='text-green-700' text={p.nombre}/>
-                      <Td text={p.direccion} twWidth='w-[540px] max-w-[540px]' />
-                      <Td text={p.telefono} twWidth='w-[100px] max-w-[100px] ' />
+                      <Td text={p.direccion} twCss='w-[540px] max-w-[540px]' />
+                      <Td text={p.telefono} twCss='w-[100px] max-w-[100px] ' />
                       <ActionButtons
-                        twWidth='w-[150px]'
+                        twCss='w-[150px]'
                         Actions={
                           [
                             {

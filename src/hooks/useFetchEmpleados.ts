@@ -21,9 +21,7 @@ export const useFetchEmpleados = () => {
    * @param numberPage number - número de la página a buscar
    */
   const getEmpleados = async (numberPage?: number) => {
-    removeEmpleadoData()
-
-    //* Si no se pasa el número como argumento se usa el valor inicial del estado
+     //* Si no se pasa el número como argumento se usa el valor inicial del estado
     await empleadosService.getAllEmpleados(numberPage ?? empleados.pageNumber)
       .then(res => {
         setEmpleados(res)
@@ -47,6 +45,12 @@ export const useFetchEmpleados = () => {
     await empleadosService.createEmpleado(empelado)
       .then((res) => {
         addEmpleado(res.data)
+
+        //* Si la cantidad de empleados supera el límite este obtiene los datos de todos los empleados
+        //* con el fin de actualizar la paginación
+        if (empleados.data?.length === 13) {
+          getEmpleados()
+        }
       })
       .catch((res: AxiosError<Empleado>) => {
         if (res.response?.status === 400) {
@@ -194,6 +198,7 @@ export const useFetchEmpleados = () => {
     empleados,
     selectedEmpleado,
     isDeleting,
+    removeEmpleadoData,
     addEmpleado: _addEmpleado,
     updateEmpleado: _updateEmpleado,
     removeEmpleado: _removeEmpleado,

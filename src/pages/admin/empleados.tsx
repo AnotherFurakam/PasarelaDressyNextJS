@@ -17,7 +17,7 @@ interface Props {
 
 const Empleados: FC<Props> = () => {
 
-  const { removeSelectedEmpleado, empleados, getEmpleados } = useFetchEmpleados()
+  const { removeSelectedEmpleado, empleados, getEmpleados, removeEmpleadoData } = useFetchEmpleados()
 
   //*Modal States
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -42,7 +42,7 @@ const Empleados: FC<Props> = () => {
           twColor='bg-blue-700'
         />
         <EmpleadoTable setOpenModal={handleOpenModal} />
-        <Pagination actualPage={empleados?.pageNumber} nextPage={empleados?.nextPage} prevPage={empleados?.prevPage} totalPage={empleados?.totalPages} getFunction={getEmpleados} />
+        <Pagination actualPage={empleados?.pageNumber} nextPage={empleados?.nextPage} prevPage={empleados?.prevPage} totalPage={empleados?.totalPages} getFunction={getEmpleados} removeDataFunction={removeEmpleadoData} />
       </div>
       <Modal isOpen={isModalOpen} handleClose={handleCloseModal} title='Formulario de empleado'>
         <EmpleadoForm handleCloseModal={handleCloseModal} />

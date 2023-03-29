@@ -21,15 +21,18 @@ const Header: FC<HeaderProps> = ({ icon, buttonText, headerText, handleOpenModal
         <div>
           {
             buttonText ?
-            <button type='button' className={`bg-gray-800 text-white p-3 lg:p-2 rounded-md my-auto flex gap-2 hover:bg-gray-900 active:bg-gray-800 active:scale-[0.99]`} onClick={handleOpenModal}>
-              <BsPlusCircleFill className='my-auto' />
-              <p className='hidden lg:block'>
-                {
-                  buttonText
-                }
-              </p>
-            </button>
-            : children
+              <div className='flex gap-3 h-full items-center'>
+                <button type='button' className={`bg-gray-800 text-white p-3 lg:py-2 lg:px-4 rounded-md flex items-center gap-2 hover:bg-gray-900 active:bg-gray-800 active:scale-[0.99]`} onClick={handleOpenModal}>
+                  <BsPlusCircleFill />
+                  <p className='hidden lg:block'>
+                    {
+                      buttonText
+                    }
+                  </p>
+                </button>
+                {children}
+              </div>
+              : <></>
           }
         </div>
       </div>

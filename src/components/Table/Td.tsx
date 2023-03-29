@@ -2,12 +2,12 @@ import type { FC } from 'react';
 
 interface TdProps {
   text: string
-  twWidth?: string
+  twCss?: string
 }
 
-const Td: FC<TdProps> = ({ text, twWidth }) => {
+const Td: FC<TdProps> = ({ text, twCss }) => {
   return (
-    <td className={`p-2 ${twWidth} text-gray-700 whitespace-nowrap truncate overflow-hidden'`}>
+    <td className={`p-2 ${twCss} text-gray-700 whitespace-nowrap truncate overflow-hidden'`}>
       {
         text
       }
