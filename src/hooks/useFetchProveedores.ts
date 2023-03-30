@@ -17,12 +17,10 @@ export const useFetchProveedores = () => {
   //* customHook functions
 
   /**
-   * Obtiene los empleados desde la API y los setea dentro del estado global de empleados  
+   * Obtiene los proveedores desde la API y los setea dentro del estado global de proveedor  
    * @param numberPage number - número de la página a buscar
    */
   const getProveedores = async (numberPage?: number) => {
-    removeProveedorData()
-
     //* Si no se pasa el número como argumento se usa el valor inicial del estado
     await proveedorService.getAllProveedores(numberPage ?? proveedores.pageNumber)
       .then(res => {
@@ -47,6 +45,11 @@ export const useFetchProveedores = () => {
     await proveedorService.createProveedor(proveedor)
       .then((res) => {
         addProveedor(res.data)
+
+        //* En case supere los 13 elementos, obtiene los datos para actualizar la paginación
+        if (proveedores.data?.length === 13) {
+          getProveedores()
+        }
       })
       .catch((res: AxiosError<Proveedor>) => {
         if (res.response?.status === 400) {
@@ -72,68 +75,6 @@ export const useFetchProveedores = () => {
         }
       })
   }
-
-  /**
-   * Habilita un empleado haciendo un petición post a la API, posteriormente actualiza los datos del empleado en el
-   * estado global de empleados
-   * @param id_empleado string -> Id del empleado a habilitar
-   */
-  /* const enableEmpleado = async (id_empleado: string) => {
-    Swal.fire({
-      icon: 'warning',
-      text: '¿Desea habilitar al empleado?',
-      confirmButtonText: 'Si',
-      cancelButtonText: 'No',
-      showCancelButton: true,
-      showConfirmButton: true
-    }).then(async (res) => {
-      if (res.isConfirmed) {
-        await empleadoService.enableEmpleado(id_empleado)
-          .then(res => {
-            updateEmpleado(res.data)
-          })
-          .catch((err: AxiosError<Empleado>) => {
-            if (err.response?.status === 400) {
-              Swal.fire({
-                icon: 'error',
-                html: err.response?.data.message?.toString(),
-              })
-            }
-          })
-      }
-    })
-  } */
-
-  /**
-    * Desabilita un empleado haciendo un petición post a la API, posteriormente actualiza los datos del empleado en el
-    * estado global de empleados
-    * @param id_empleado string -> Id del empleado a desabilitar
-    */
-  /* const disableEmpleado = async (id_empleado: string) => {
-    Swal.fire({
-      icon: 'warning',
-      text: '¿Desea desabilitar al empleado?',
-      confirmButtonText: 'Si',
-      cancelButtonText: 'No',
-      showCancelButton: true,
-      showConfirmButton: true
-    }).then(async (res) => {
-      if (res.isConfirmed) {
-        await empleadoService.disableEmpleado(id_empleado)
-          .then(res => {
-            updateEmpleado(res.data)
-          })
-          .catch((err: AxiosError<Empleado>) => {
-            if (err.response?.status === 400) {
-              Swal.fire({
-                icon: 'error',
-                html: err.response?.data.message?.toString(),
-              })
-            }
-          })
-      }
-    })
-  } */
 
   /**
    * Selecciona la información un empleado del estado global de empleados mediante su id. <br>
@@ -186,6 +127,7 @@ export const useFetchProveedores = () => {
             setIsDeleting(false)
           })
       }
+      setIsDeleting(false)
     })
   }
 
@@ -193,6 +135,7 @@ export const useFetchProveedores = () => {
     proveedores,
     isDeleting,
     selectedProveedor,
+    removeProveedorData,
     getProveedores,
     addProveedor: _addProveedor,
     updateProveedor: _updateProveedor,

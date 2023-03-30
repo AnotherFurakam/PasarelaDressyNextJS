@@ -26,7 +26,7 @@ const Modal: React.FC<ModalProps> = ({ children, title, isOpen, handleClose }) =
 											<h1 className='my-auto text-white text-xl'>{title}</h1>
 											<span className='block my-auto text-2xl text-red-400 bg-white rounded-full cursor-pointer hover:text-red-500' onClick={handleClose}><RiCloseCircleFill /></span>
 										</div>
-										<div className='p-2'>
+										<div className='p-2 h-full'>
 											{
 												children
 											}

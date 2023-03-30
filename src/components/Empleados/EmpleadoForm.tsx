@@ -55,7 +55,7 @@ const EmpleadoForm: React.FC<Props> = ({ handleCloseModal }) => {
               .then(() => {
                 Swal.fire({
                   icon: 'success',
-                  text: 'Empleado registrado correctamente'
+                  text: 'Empleado actualizado correctamente'
                 })
                 helpers.setSubmitting(false)
                 handleCloseModal()

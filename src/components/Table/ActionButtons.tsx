@@ -9,13 +9,13 @@ type ActionButton = {
 
 interface ActionButtonsProps {
   Actions: ActionButton[]
-  twWidth?: string
+  twCss?: string
 }
 
 
-const ActionButtons: FC<ActionButtonsProps> = ({ Actions, twWidth }) => {
+const ActionButtons: FC<ActionButtonsProps> = ({ Actions, twCss }) => {
   return (
-    <td className={`p-2 ${twWidth}`}>
+    <td className={`p-2 ${twCss}`}>
       <div className='flex gap-3 justify-center'>
         {
           Actions.map((action, index) => (

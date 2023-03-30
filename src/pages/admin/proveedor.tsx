@@ -16,7 +16,7 @@ interface proveedorProps { }
 
 const Proveedor: FC<proveedorProps> = ({ }) => {
 
-  const {getProveedores, proveedores, removeSelectedProveedor} = useFetchProveedores()
+  const {getProveedores, proveedores, removeSelectedProveedor, removeProveedorData} = useFetchProveedores()
 
   //*Modal States
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -41,7 +41,7 @@ const Proveedor: FC<proveedorProps> = ({ }) => {
           twColor='bg-green-700'
         />
         <ProveedoresTable setOpenModal={handleOpenModal} />
-        <Pagination getFunction={getProveedores} actualPage={proveedores.pageNumber} nextPage={proveedores.nextPage} prevPage={proveedores.prevPage} totalPage={proveedores.totalPages} />
+        <Pagination getFunction={getProveedores} actualPage={proveedores.pageNumber} nextPage={proveedores.nextPage} prevPage={proveedores.prevPage} totalPage={proveedores.totalPages} removeDataFunction={removeProveedorData} />
       </div>
       <Modal isOpen={isModalOpen} handleClose={handleCloseModal} title='Formulario de proveedor'>
         <ProveedorForm handleCloseModal={handleCloseModal}/>

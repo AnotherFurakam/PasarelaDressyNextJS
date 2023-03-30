@@ -38,7 +38,7 @@ export const useEmpleadoStore = create<EmpleadoStore>()(
               ...state,
               empleados: {
                 ...state.empleados,
-                data:  state.empleados.data.length < 13 ? [...state.empleados.data, empleado] : state.empleados.data,
+                data: state.empleados.data.length < 13 ? [...state.empleados.data, empleado] : state.empleados.data,
               }
             }
           } else {

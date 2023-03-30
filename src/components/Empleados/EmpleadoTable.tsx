@@ -51,10 +51,10 @@ const EmpleadoTable: FC<Props> = ({ setOpenModal }) => {
                   empleados.data.map((e: Empleado) => (
                     <tr className='text-center' key={e.id_empleado}>
                       <TdId textColor='text-blue-700' text={e.dni} />
-                      <Td text={e.nombres} twWidth='w-[280px] max-w-[280px]' />
-                      <Td text={e.apellido_pat + ' ' + e.apellido_mat} twWidth='w-[280px] max-w-[280px]' />
-                      <Td text={e.numero_cel} twWidth='w-[100px]' />
-                      <Td text={e.correo} twWidth='w-[200px] max-w-[200px]'/>
+                      <Td text={e.nombres} twCss='w-[280px] max-w-[280px]' />
+                      <Td text={e.apellido_pat + ' ' + e.apellido_mat} twCss='w-[280px] max-w-[280px]' />
+                      <Td text={e.numero_cel} twCss='w-[100px]' />
+                      <Td text={e.correo} twCss='w-[200px] max-w-[200px]'/>
                       <TogleEnable
                         id={e.id_empleado}
                         value={e.activo}

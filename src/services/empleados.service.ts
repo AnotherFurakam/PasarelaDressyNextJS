@@ -1,9 +1,14 @@
-import { Empleado, EmpleadoForm, PaginationEmpleado } from "@/interfaces/empelado-interfaces"
+import { Empleado, EmpleadoForm, PaginationEmpleado, PaginationShortEmpleado } from "@/interfaces/empelado-interfaces"
 import ApiBase from "../pages/api/PasarelaDressyApi"
 import { AxiosResponse } from "axios";
 
 const getAllEmpleados = async (page: number): Promise<PaginationEmpleado> => {
   const response: AxiosResponse<PaginationEmpleado> = await ApiBase.get(`empleado/paginate?pageNumber=${page}&pageSize=${13}`);
+  return response.data
+}
+
+const getAllEmpledosNotAssignedFromRol = async (page: number, id_rol: string): Promise<PaginationShortEmpleado> => {
+  const response: AxiosResponse<PaginationShortEmpleado> = await ApiBase.get(`empleado/paginate/no-asigned-rol/${id_rol}?pageNumber=${page}&pageSize=${10}`);
   return response.data
 }
 
@@ -34,6 +39,7 @@ const removeEmpleado = async (id_empleado: string) => {
 
 const exportFunc = {
   getAllEmpleados,
+  getAllEmpledosNotAssignedFromRol,
   createEmpleado,
   removeEmpleado,
   updateEmpleado,

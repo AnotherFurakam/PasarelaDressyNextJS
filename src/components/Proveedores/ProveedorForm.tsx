@@ -33,7 +33,7 @@ const ProveedorForm: React.FC<Props> = ({ handleCloseModal }) => {
               .then(() => {
                 Swal.fire({
                   icon: 'success',
-                  text: 'Empleado registrado correctamente'
+                  text: 'Proveedor registrado correctamente'
                 })
                 helpers.setSubmitting(false)
                 handleCloseModal()
@@ -50,7 +50,7 @@ const ProveedorForm: React.FC<Props> = ({ handleCloseModal }) => {
               .then(() => {
                 Swal.fire({
                   icon: 'success',
-                  text: 'Empleado registrado correctamente'
+                  text: 'Proveedor actualizado correctamente'
                 })
                 helpers.setSubmitting(false)
                 handleCloseModal()
