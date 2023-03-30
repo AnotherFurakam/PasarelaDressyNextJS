@@ -1,3 +1,4 @@
+import useFetchAsignaciones from '@/hooks/useFetchAsignaciones';
 import { useFetchRoles } from '@/hooks/useFetchRoles';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import { Rol } from '@/interfaces/empelado-interfaces';
@@ -11,6 +12,7 @@ interface RolComboProps {
 const RolCombo: FC<RolComboProps> = () => {
 
   const { roles, selectRolById, selectedRol } = useFetchRoles()
+  const { asignaciones,removeAsignacionData } = useFetchAsignaciones()
 
   const [comboText, setComboText] = useState<string>("Seleccionar...")
   const [openCombo, setOpenCombo] = useState<boolean>(false)
@@ -18,8 +20,10 @@ const RolCombo: FC<RolComboProps> = () => {
   //const handleOpenCombo = () => setOpenCombo(true)
 
   const handleCloseCombo = (text: string, id_rol?: string) => {
-    console.log("Ejecuto")
-    if (id_rol !== undefined) selectRolById(id_rol)
+    if (id_rol !== undefined) {
+      removeAsignacionData()
+      selectRolById(id_rol)
+    }
     setComboText(text)
     setOpenCombo(false)
   }
@@ -30,7 +34,10 @@ const RolCombo: FC<RolComboProps> = () => {
 
   useEffect(() => {
     //* Seteo el primer rol por defecto
-    if (roles) handleCloseCombo(roles[0].nombre, roles[0].id_rol)
+    if (roles) {
+      setComboText(roles[0].nombre)
+      selectRolById(roles[0].id_rol)
+    } 
   }, [roles]);
 
   return (

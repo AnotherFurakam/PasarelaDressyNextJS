@@ -78,7 +78,8 @@ export const useAsignacionStore = create<AsignacionStore>()(
           ...state,
           asignaciones: {
             ...state.asignaciones,
-            data: null
+            data: null,
+            pageNumber: 1
           }
         }))
       },

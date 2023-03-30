@@ -15,8 +15,7 @@ const AsignacionTable: FC<AsignacionTableProps> = ({ }) => {
 
 
   useEffect(() => {
-    if (selectedRol){
-      removeAsignacionData()
+    if (selectedRol ) {
       getAsignaciones(selectedRol.id_rol)
     }
   }, [selectedRol])
