@@ -1,11 +1,13 @@
 import EmpleadoTable from '@/components/Empleados/EmpleadoTable';
 import { AdminLayout } from '@/layouts/AdminLayout'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic';
 import { useFetchEmpleados } from '@/hooks/useFetchEmpleados';
 import { Pagination } from '@/components/Pagination';
 import Header from '@/components/AdminLayout/Header';
 import { FaBoxes } from 'react-icons/fa';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/router';
 
 
 // Importando Modal como componente CSR
@@ -19,6 +21,10 @@ const Empleados: FC<Props> = () => {
 
   const { removeSelectedEmpleado, empleados, getEmpleados, removeEmpleadoData } = useFetchEmpleados()
 
+  const {loginData} = useAuth()
+
+  const {push} = useRouter()
+
   //*Modal States
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
@@ -30,6 +36,7 @@ const Empleados: FC<Props> = () => {
   const handleOpenModal = () => {
     setIsModalOpen(true)
   }
+
 
   return (
     <AdminLayout>

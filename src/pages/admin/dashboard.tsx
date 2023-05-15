@@ -1,7 +1,11 @@
+import { useAuth } from '@/hooks/useAuth';
 import { AdminLayout } from '@/layouts/AdminLayout';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { RiDashboardFill } from 'react-icons/ri';
 
-const Admin = () => {
+const Dashboard = () => {
+
   return (
     <AdminLayout>
       <div className='bg-cyan-800 p-4 flex justify-between'>
@@ -14,4 +18,4 @@ const Admin = () => {
   )
 }
 
-export default Admin
+export default Dashboard

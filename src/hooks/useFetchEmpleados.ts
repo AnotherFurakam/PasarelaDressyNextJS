@@ -5,8 +5,11 @@ import { AxiosError } from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { shallow } from "zustand/shallow";
+import { useAuth } from "./useAuth";
 
 export const useFetchEmpleados = () => {
+
+  const {loginData} = useAuth()
 
   //* Zustand State
   const { empleados, selectedEmpleado, setEmpleados, addEmpleado, removeEmpleadoData, setSelectedEmpleado, removeSelectedEmpleado, updateEmpleado } = useEmpleadoStore((state) => state, shallow);
@@ -22,7 +25,7 @@ export const useFetchEmpleados = () => {
    */
   const getEmpleados = async (numberPage?: number) => {
      //* Si no se pasa el número como argumento se usa el valor inicial del estado
-    await empleadosService.getAllEmpleados(numberPage ?? empleados.pageNumber)
+    await empleadosService.getAllEmpleados(numberPage ?? empleados.pageNumber,loginData?.token)
       .then(res => {
         setEmpleados(res)
       }).catch((res: AxiosError<PaginationEmpleado>) => {
@@ -66,7 +69,7 @@ export const useFetchEmpleados = () => {
    * @param id_empleado  string -> Id del empleado a actualizar
    */
   const _updateEmpleado = async (empleado: EmpleadoForm, id_empleado: string) => {
-    await empleadosService.updateEmpleado(empleado, id_empleado)
+    await empleadosService.updateEmpleado(empleado, id_empleado, loginData?.token)
       .then(res => {
         updateEmpleado(res.data)
       })
@@ -92,7 +95,7 @@ export const useFetchEmpleados = () => {
       showConfirmButton: true
     }).then(async (res) => {
       if (res.isConfirmed) {
-        await empleadosService.enableEmpleado(id_empleado)
+        await empleadosService.enableEmpleado(id_empleado, loginData?.token)
           .then(res => {
             updateEmpleado(res.data)
           })
@@ -123,7 +126,7 @@ export const useFetchEmpleados = () => {
       showConfirmButton: true
     }).then(async (res) => {
       if (res.isConfirmed) {
-        await empleadosService.disableEmpleado(id_empleado)
+        await empleadosService.disableEmpleado(id_empleado, loginData?.token)
           .then(res => {
             updateEmpleado(res.data)
           })
@@ -176,7 +179,7 @@ export const useFetchEmpleados = () => {
       showConfirmButton: true
     }).then(async (res) => {
       if (res.isConfirmed) {
-        await empleadosService.removeEmpleado(id_empleado)
+        await empleadosService.removeEmpleado(id_empleado, loginData?.token)
           .then(() => {
             removeEmpleadoData()
             getEmpleados()
